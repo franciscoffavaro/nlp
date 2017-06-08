@@ -1,0 +1,26 @@
+{
+  "name": "nlp",
+  "version": "1.0.0",
+  "description": "Algoritmo de Linguagem Natural desenvolvido para a Disciplina de Inteligência Antificial. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/franciscoffavaro/nlp.git"
+  },
+  "keywords": [
+    "ia",
+    "inteligencia",
+    "processamento",
+    "linguagem",
+    "natural"
+  ],
+  "author": "Francisco Favaro <franciscoffavaro@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/franciscoffavaro/nlp/issues"
+  },
+  "homepage": "https://github.com/franciscoffavaro/nlp#readme"
+}
