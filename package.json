@@ -22,5 +22,11 @@
   "bugs": {
     "url": "https://github.com/franciscoffavaro/nlp/issues"
   },
-  "homepage": "https://github.com/franciscoffavaro/nlp#readme"
+  "homepage": "https://github.com/franciscoffavaro/nlp#readme",
+  "devDependencies": {
+    "fs": "0.0.1-security"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4"
+  }
 }
