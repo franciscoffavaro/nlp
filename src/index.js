@@ -10,30 +10,48 @@ const _ = require('lodash');
 // Melhorar Desempenho.
 const treinamento = fs.readFileSync('shakespeare.txt', 'utf8').split(' ').filter((item) => item != '');
 
-//eu corri muito
+// const params = process.argv.slice(2);
+const wordsArray = (palavra, arrayTreinamento) => {
+  let palavras = [];
+  let countWords = [];
+  let countPalavras = {};
+  let arrayPalavras = [];
+  for (let i=0; i< arrayTreinamento.length; i++){
+    if(palavra == arrayTreinamento[i]){
+      palavras.push(arrayTreinamento[i+1]);
+    }
+  }
+  for(let k = 0; k< palavras.length; k++){
+    palavras[k] = palavras[k].replace(/(\r\n|\n|\r)/gm,"")
+  }
+  return palavras;
+}
 
-const findWordAfter = (palavra, arrayTreinamento) => {
-//   let words = [];
-//   for (let i=0; i<arrayTreinamento.length; i++){
-//     if(arrayTreinamento[i].toUpperCase() === palavra.toUpperCase()){
-//       console.log(arrayTreinamento[i]);
-//       for(let j=0; j<words.length; j++){
-//         if(words[j].word == palavra){
-//           words[j].count +=1;
-//         }else{
-//
-//           words.push({
-//             word: palavra,
-//             count: 1
-//           })
-//         }
-//       }
-//     }
-//   }
-//   return words;
-// }
+const countPalavraInArray = (array) =>{
+  let result = [];
+  for (let i = 0; i<array.length; i++){
+    if(result.length == 0){
+      result.push({
+        word: array[i],
+        count: 1
+      });
+    }else{
+      for(let j = 0; j<result.length; j++){
+        if(array[i] == result[j].word){
+          result[j].count ++;
+        }else{
+          result.push({
+            word: array[i],
+            count: 1
+          });
+        }
+      }
+    }
+  }
+  return result;
+}
 
-console.log(findWordAfter('now', treinamento));
+const palavras = wordsArray('now', treinamento);
+console.log(countPalavraInArray(palavras));
 
 //Leitura dos parâmetros no Temrinal.
-const params = process.argv.slice(2);
