@@ -1,9 +1,17 @@
+"use strict"
+
+//Import of libraries
 const fs = require('fs');
 const _ = require('lodash');
+
+//Read a File ans transform in a array os elements ordened by the order of the text.
 const treinamento = fs.readFileSync('shakespeare.txt', 'utf8').split(' ').filter((item) => item != '');
 
-//Functions
 
+
+// ****Functions****//
+
+//Remove a simple regular expression of a array os elements. Need modify to remove a '\', BUT WORK.
 const removeRegularExpression = (array) =>{
   for(let k = 0; k< array.length; k++){
     array[k] = array[k].replace(/(\r\n|\n|\r)/gm,"")
@@ -11,10 +19,12 @@ const removeRegularExpression = (array) =>{
   return array;
 }
 
+//return a value of a array.
 const countNGram = (array) => {
   return array.length;
 }
 
+//count the word in a array of elements.
 const countWords = (palavra, array_treinamento) => {
   let count = 0;
   for (let i = 0; i< array_treinamento.length; i++){
@@ -25,6 +35,7 @@ const countWords = (palavra, array_treinamento) => {
   return count;
 }
 
+//Count how many times a word appears after a parameter.
 const countWordsAfter = (palavraAnterior, palavra, array_treinamento) => {
   let count = 0;
   for (let i = 0; i< array_treinamento.length; i++){
@@ -37,6 +48,7 @@ const countWordsAfter = (palavraAnterior, palavra, array_treinamento) => {
   return count;
 }
 
+//Show the word ofter a parameter.
 const findWordsAfter = (palavra, array_treinamento) => {
   let palavras = [];
   let uniqueArray = [];
@@ -49,11 +61,14 @@ const findWordsAfter = (palavra, array_treinamento) => {
   return uniqueArray;
 }
 
+// Recieve a parameter on terminal.
 const params = process.argv.slice(2).join(" ");
 
+
+//Function Main used to make the program work.
 const main = (params, array_treinamento) => {
   let probabilidades = []
-  result = [];
+  let result = [];
   for(let i = 0; i<findWordsAfter(params, array_treinamento).length; i++){
     probabilidades.push({
       word: findWordsAfter(params, array_treinamento)[i],
@@ -64,16 +79,6 @@ const main = (params, array_treinamento) => {
   for(let j=0; j<3; j++){
     result.push(params.concat(' ', palavras[j].word));
   }
-  return result;
+  console.log(result);
 }
-//console.log(process.argv.slice(2).slice(process.argv.slice(2).length-1))
-console.log(main(params, removeRegularExpression(treinamento)));
-
-//console.log(findWords('Four days', treinamento));
-//console.log(findWordsAfter('Long withering', removeRegularExpression(treinamento)));
-//console.log(countWordsAfter('now', 'my', removeRegularExpression(treinamento)));
-
-
-// const caclProbabilidadeNGram = (palavra, palavraAnterior){
-//
-// }
+main(params, removeRegularExpression(treinamento));
