@@ -11,10 +11,6 @@ const removeRegularExpression = (array) =>{
   return array;
 }
 
-const concatArray = (array) => {
-  return array.join(" ");
-}
-
 const countNGram = (array) => {
   return array.length;
 }
@@ -34,7 +30,6 @@ const countWordsAfter = (palavraAnterior, palavra, array_treinamento) => {
   for (let i = 0; i< array_treinamento.length; i++){
     if(array_treinamento.slice(i, palavraAnterior.split(' ').length+i).join(" ").toUpperCase() == palavraAnterior.toUpperCase()){
       if(array_treinamento.slice(i, palavraAnterior.split(' ').length+i+1).join(" ").toUpperCase() == palavraAnterior.concat(" ", palavra).toUpperCase()){
-        console.log((array_treinamento.slice(i, palavraAnterior.split(' ').length+i+1).join(" ")));
         count ++;
       }
     }
@@ -47,17 +42,36 @@ const findWordsAfter = (palavra, array_treinamento) => {
   let uniqueArray = [];
   for (let i=0; i< array_treinamento.length; i++){
     if(array_treinamento.slice(i, palavra.split(' ').length+i).join(" ").toUpperCase() == palavra.toUpperCase()){
-      palavras.push(array_treinamento.slice(i, palavra.split(' ').length+i+1).join(" "));
+      palavras.push(array_treinamento.slice(i, palavra.split(' ').length+i+1).slice(array_treinamento.slice(i, palavra.split(' ').length+i+1).length-1).join(" "));
     }
   }
-  // uniqueArray = palavras.filter((item, pos) =>  palavras.indexOf(item) == pos )
-  // return uniqueArray;
-  return palavras;
+  uniqueArray = palavras.filter((item, pos) =>  palavras.indexOf(item) == pos )
+  return uniqueArray;
 }
 
-// console.log(findWords('Four days', treinamento));
+const params = process.argv.slice(2).join(" ");
+
+const main = (params, array_treinamento) => {
+  let probabilidades = []
+  result = [];
+  for(let i = 0; i<findWordsAfter(params, array_treinamento).length; i++){
+    probabilidades.push({
+      word: findWordsAfter(params, array_treinamento)[i],
+      prob: countWordsAfter(params, findWordsAfter(params, array_treinamento)[i], array_treinamento)/countWords(params, array_treinamento)
+    })
+  }
+  let palavras = _.orderBy(probabilidades, ['prob'], ['desc']);
+  for(let j=0; j<3; j++){
+    result.push(params.concat(' ', palavras[j].word));
+  }
+  return result;
+}
+//console.log(process.argv.slice(2).slice(process.argv.slice(2).length-1))
+console.log(main(params, removeRegularExpression(treinamento)));
+
+//console.log(findWords('Four days', treinamento));
 //console.log(findWordsAfter('Long withering', removeRegularExpression(treinamento)));
-console.log(countWordsAfter('now', 'my', removeRegularExpression(treinamento)));
+//console.log(countWordsAfter('now', 'my', removeRegularExpression(treinamento)));
 
 
 // const caclProbabilidadeNGram = (palavra, palavraAnterior){
