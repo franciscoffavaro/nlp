@@ -15,7 +15,7 @@ $ npm install
 
 ### Execução:
 ```
-$ node src/main.js
+$ node src/main.js [PARAMETROS] - Nesse caso, uma frase. 
 ```
 ## People
 
